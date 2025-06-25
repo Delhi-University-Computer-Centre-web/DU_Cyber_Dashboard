@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - DU Cyber Soochak</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <span>Welcome, {{ current_user.username }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('view_result') }}">📂 View Results</a>
+    </div>
+
+    <div class="container">
+        <h1>📊 Real-Time Dashboard</h1>
+
+        <div class="summary">
+            <div>Total Logs: {{ total_logs }}</div>
+            <div>Total Threats: {{ total_threats }}</div>
+            <div>Unique IPs: {{ unique_ips }}</div>
+        </div>
+
+        {% if enable_graphs %}
+        <div class="charts">
+            <h2>Status Codes Distribution</h2>
+            <canvas id="statusChart"></canvas>
+
+            <h2>Top Requesting IPs</h2>
+            <canvas id="ipChart"></canvas>
+
+            <h2>Activity Timeline</h2>
+            <canvas id="timelineChart"></canvas>
+        </div>
+
+        <div class="tables">
+            <h2>Top URLs</h2>
+            <ul>
+                {% for url, count in top_urls.items() %}
+                <li>{{ url }} - {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Top User Agents</h2>
+            <ul>
+                {% for agent, count in top_agents.items() %}
+                <li>{{ agent }} - {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Top Countries</h2>
+            <ul>
+                {% for country, count in top_countries.items() %}
+                <li>{{ country }} - {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Top Threat IPs</h2>
+            <ul>
+                {% for ip, count in top_threats.items() %}
+                <li>{{ ip }} - {{ count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const statusCtx = document.getElementById('statusChart')?.getContext('2d');
+        const ipCtx = document.getElementById('ipChart')?.getContext('2d');
+        const timelineCtx = document.getElementById('timelineChart')?.getContext('2d');
+
+        const statusData = {
+            labels: {{ status_counts.keys()|list|tojson }},
+            datasets: [{
+                label: 'Status Codes',
+                data: {{ status_counts.values()|list|tojson }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderWidth: 1
+            }]
+        };
+
+        const ipData = {
+            labels: {{ ip_counts.keys()|list|tojson }},
+            datasets: [{
+                label: 'Requests per IP',
+                data: {{ ip_counts.values()|list|tojson }},
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderWidth: 1
+            }]
+        };
+
+        const timelineData = {
+            labels: {{ timeline.keys()|list|tojson }},
+            datasets: [{
+                label: 'Timeline Activity',
+                data: {{ timeline.values()|list|tojson }},
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.2
+            }]
+        };
+
+        if (statusCtx) new Chart(statusCtx, { type: 'bar', data: statusData });
+        if (ipCtx) new Chart(ipCtx, { type: 'bar', data: ipData });
+        if (timelineCtx) new Chart(timelineCtx, { type: 'line', data: timelineData });
+    </script>
+</body>
+</html>
