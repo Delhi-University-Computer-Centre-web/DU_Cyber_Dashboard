@@ -10,16 +10,14 @@ from utils.geoip import get_ip_location
 from utils.alerts import send_alert_email
 from utils.report_generator import generate_pdf_report
 from forms import LoginForm, RegisterForm
-from model import model
+from model import db, User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-from models import User
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -61,31 +59,43 @@ def logout():
 @login_required
 def dashboard():
     log_data = parse_logs('logs')
-    total_logs = len(log_data)
-    total_threats = sum(1 for log in log_data if log.get('is_threat'))
-    unique_ips = len(set(log['ip'] for log in log_data))
+    total_logs = log_data["total_logs"]
+    total_threats = log_data["total_threats"]
+    unique_ips = log_data["unique_ips"]
+    top_threats = log_data["top_threats"]
+    ai_threats = log_data["ai_threats"]
+    geo_data = log_data["geo_data"]
+    status_counts = log_data["status_counts"]
+    ip_counts = log_data["ip_counts"]
+    timeline = log_data["timeline"]
+    top_urls= log_data["top_urls"]
+    top_agents = log_data["top_agents"]
+    top_countries = log_data["top_countries"]
+    # total_logs = len(log_data)
+    # total_threats = sum(1 for log in log_data if log.get('is_threat'))
+    # unique_ips = len(set(log['ip'] for log in log_data))
 
-    top_threats = {}
-    ai_threats = {}
+    # top_threats = {}
+    # ai_threats = {}
 
-    for log in log_data:
-        ip = log['ip']
-        if log['is_threat']:
-            top_threats[ip] = top_threats.get(ip, 0) + 1
-        if model.predict(log):
-            ai_threats[ip] = ai_threats.get(ip, 0) + 1
-            if ai_threats[ip] > 5:
-                send_alert_email(ip, log)
+    # for log in log_data:
+    #     ip = log['ip']
+    #     if log['is_threat']:
+    #         top_threats[ip] = top_threats.get(ip, 0) + 1
+    #     if model.predict(log):
+    #         ai_threats[ip] = ai_threats.get(ip, 0) + 1
+    #         if ai_threats[ip] > 5:
+    #             send_alert_email(ip, log)
 
-    geo_data = [get_ip_location(ip) for ip in top_threats]
+    # geo_data = [get_ip_location(ip) for ip in top_threats]
 
-    data_summary = {
-        'total_logs': total_logs,
-        'total_threats': total_threats,
-        'unique_ips': unique_ips,
-        'top_threats': top_threats,
-        'ai_threats': ai_threats
-    }
+    # data_summary = {
+    #     'total_logs': total_logs,
+    #     'total_threats': total_threats,
+    #     'unique_ips': unique_ips,
+    #     'top_threats': top_threats,
+    #     'ai_threats': ai_threats
+    # }
     return render_template('dashboard.html',
                            total_logs=total_logs,
                            total_threats=total_threats,
@@ -93,8 +103,15 @@ def dashboard():
                            top_threats=top_threats,
                            ai_threats=ai_threats,
                            geo_data=geo_data,
-                           log_data=log_data)
-
+                           log_data=log_data,
+                           status_counts=status_counts,
+                           ip_counts=ip_counts,
+                           timeline=timeline,
+                           top_urls=top_urls,
+                           top_agents=top_agents,
+                           top_countries=top_countries,
+                           enable_graphs=True)
+    
 @app.route('/view_result')
 @login_required
 def view_result():

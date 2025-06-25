@@ -3,6 +3,7 @@ import os
 from collections import Counter, defaultdict
 from datetime import datetime
 import random
+from utils.geoip import get_ip_location  
 
 
 def parse_logs(log_dir):
@@ -59,7 +60,9 @@ def parse_logs(log_dir):
         'top_countries': dict(top_countries.most_common(5)),
         'top_threats': dict(top_threats.most_common(5)),
         'ai_threats': dict(ai_threats.most_common(5)),
-        'all_threat_ips': list(top_threats.keys())
+        'all_threat_ips': list(top_threats.keys()),
+        'geo_data': [get_ip_location(ip) for ip in top_threats]
     }
 
     return result
+
