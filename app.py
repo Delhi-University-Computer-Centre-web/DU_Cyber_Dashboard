@@ -65,6 +65,12 @@ def dashboard():
     top_threats = log_data["top_threats"]
     ai_threats = log_data["ai_threats"]
     geo_data = log_data["geo_data"]
+    status_counts = log_data["status_counts"]
+    ip_counts = log_data["ip_counts"]
+    timeline = log_data["timeline"]
+    top_urls= log_data["top_urls"]
+    top_agents = log_data["top_agents"]
+    top_countries = log_data["top_countries"]
     # total_logs = len(log_data)
     # total_threats = sum(1 for log in log_data if log.get('is_threat'))
     # unique_ips = len(set(log['ip'] for log in log_data))
@@ -97,8 +103,15 @@ def dashboard():
                            top_threats=top_threats,
                            ai_threats=ai_threats,
                            geo_data=geo_data,
-                           log_data=log_data)
-
+                           log_data=log_data,
+                           status_counts=status_counts,
+                           ip_counts=ip_counts,
+                           timeline=timeline,
+                           top_urls=top_urls,
+                           top_agents=top_agents,
+                           top_countries=top_countries,
+                           enable_graphs=True)
+    
 @app.route('/view_result')
 @login_required
 def view_result():

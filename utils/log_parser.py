@@ -65,3 +65,4 @@ def parse_logs(log_dir):
     }
 
     return result
+

@@ -9,17 +9,17 @@
 <body>
     <div class="navbar">
         <span>Welcome, {{ current_user.username }}</span>
+        <a href="{{ url_for('view_result') }}">View Results</a>
         <a href="{{ url_for('logout') }}">Logout</a>
-        <a href="{{ url_for('view_result') }}">📂 View Results</a>
     </div>
 
     <div class="container">
-        <h1>📊 Real-Time Dashboard</h1>
+        <h1>Real-Time Dashboard</h1>
 
         <div class="summary">
-            <div>Total Logs: {{ total_logs }}</div>
-            <div>Total Threats: {{ total_threats }}</div>
-            <div>Unique IPs: {{ unique_ips }}</div>
+            <div>Total Logs : {{ total_logs }}</div>
+            <div>Total Threats : {{ total_threats }}</div>
+            <div>Unique IPs : {{ unique_ips }}</div>
         </div>
 
         {% if enable_graphs %}
