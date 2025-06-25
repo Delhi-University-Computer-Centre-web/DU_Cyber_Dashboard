@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
-from models import db, LogEntry, Threat
+from model import db, LogEntry, Threat
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), 'reports')
