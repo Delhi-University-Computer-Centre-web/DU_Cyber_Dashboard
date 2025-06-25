@@ -2,38 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>☠️ Threat Monitor - DU Cyber Cell</title>
+  <title>Threat Monitor - DU Cyber Cell</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <header class="header">
-    <h1>☠️ Threat Monitor - DU Cyber Cell</h1>
+    <h1>Threat Monitor - DU Cyber Cell</h1>
     <nav>
-      <a class="nav-link" href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
-      <a class="nav-link" href="{{ url_for('view_result') }}">📂 View Results</a>
-      <a class="nav-link" href="{{ url_for('logout') }}">🔐 Logout</a>
+      <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="nav-link" href="{{ url_for('view_result') }}">View Results</a>
+      <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
     </nav>
   </header>
 
   <main class="main">
     <section class="actions">
       <form action="{{ url_for('send_report_email') }}" method="POST">
-        <button type="submit">📤 Send Threat Report via Email</button>
+        <button type="submit">Send Threat Report via Email</button>
       </form>
     </section>
 
     <section>
-      <h2>Detected Threats 🔍</h2>
+      <h2>Detected Threats</h2>
       {% if threats %}
       <table class="styled-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>🕓 Timestamp</th>
-            <th>🧠 IP Address</th>
-            <th>🌍 Location</th>
-            <th>🚨 Type</th>
-            <th>📝 Description</th>
+            <th>Timestamp</th>
+            <th>IP Address</th>
+            <th>Location</th>
+            <th>Type</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
         </tbody>
       </table>
       {% else %}
-      <p>No threats detected yet. ✅</p>
+      <p>No threats detected yet.</p>
       {% endif %}
     </section>
   </main>
