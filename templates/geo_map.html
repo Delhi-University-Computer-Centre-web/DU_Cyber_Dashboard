@@ -1,0 +1,42 @@
+<!-- templates/geo_map.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GeoIP Map | DU Cyber Threat Monitor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        #map { height: 90vh; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center; margin: 15px;">🌍 Threat Geo-IP Map</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([20.5937, 78.9629], 3); // India centered
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © OpenStreetMap contributors'
+        }).addTo(map);
+
+        fetch('/api/geoip')
+            .then(res => res.json())
+            .then(data => {
+                data.forEach(entry => {
+                    const popup = `
+                        <strong>IP:</strong> ${entry.ip}<br>
+                        <strong>City:</strong> ${entry.city}<br>
+                        <strong>Country:</strong> ${entry.country}<br>
+                        <strong>Time:</strong> ${entry.timestamp}<br>
+                        <strong>Threat:</strong> ${entry.threat}
+                    `;
+                    L.marker([entry.city === "Delhi" ? 28.61 : 20.59, entry.country === "India" ? 77.20 : 78.96])
+                        .addTo(map)
+                        .bindPopup(popup);
+                });
+            });
+    </script>
+</body>
+</html>

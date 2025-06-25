@@ -1,0 +1,123 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1e293b;
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: #facc15;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar span {
+    font-size: 18px;
+}
+
+/* Container */
+.container {
+    padding: 20px 40px;
+}
+
+/* Headings */
+h1 {
+    font-size: 28px;
+    color: #0f172a;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 22px;
+    color: #1e3a8a;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* Summary Boxes */
+.summary {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8fafc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.summary div {
+    background-color: #f1f5f9;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #1e293b;
+    font-size: 18px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+}
+
+/* Charts */
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+canvas {
+    background: white;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    max-width: 100%;
+}
+
+/* Tables */
+.tables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.tables ul {
+    list-style: none;
+    background-color: #f1f5f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    font-size: 15px;
+}
+
+.tables li {
+    padding: 5px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tables li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .summary {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .charts {
+        gap: 20px;
+    }
+}
