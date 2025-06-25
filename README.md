@@ -1,4 +1,4 @@
-# DU_Cyber_Dashboard
+# DU Cyber Dashboard made by Priyanshu and Pushkar
 
 A web-based cyber security dashboard for log analysis, threat detection, reporting, and visualization. Built with Flask, SQLAlchemy, and AI/ML for advanced threat intelligence.
 
