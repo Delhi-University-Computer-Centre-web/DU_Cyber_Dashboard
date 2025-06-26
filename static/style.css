@@ -10,6 +10,8 @@
 .navbar {
     background-color: #1e293b;
     color: white;
+    font-size: 16px;
+    font-family: sans-serif;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -17,7 +19,11 @@
 }
 
 .navbar a {
+    display: flex;
+    align-items: center;
     color: #facc15;
+    font-size: 16px;
+    font-family: sans-serif;
     margin-left: 15px;
     text-decoration: none;
     font-weight: bold;
@@ -51,21 +57,49 @@ h2 {
 .summary {
     display: flex;
     justify-content: space-around;
-    background-color: #f8fafc;
+    background-color: #e8e8e8;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
 }
 
 .summary div {
-    background-color: #f1f5f9;
+    background-color: #c1c0c0;
     padding: 15px 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     font-weight: bold;
-    color: #1e293b;
+    color: #000000;
     font-size: 18px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.33);
+}
+
+.navbar_for_buttons {
+    background-color: #ab32c3;
+    color: white;
+    font-size: 16px;
+    font-family: sans-serif;
+    padding: 12px 20px;
+    display: flex;
+    border-radius: 20px;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.navbar_for_buttons a {
+    background-color: #8c29a0;
+    color: #ffffff;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-family: sans-serif;
+    padding: 12px 20px;
+    display: flex;
+    border-radius: 20px;
+    text-decoration: none;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(161, 161, 161, 0.3);
 }
 
 /* Charts */
@@ -73,23 +107,40 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    height: 60%;
+    width: 60%;
+    align-items: center;   /* This centers children horizontally */
     margin-bottom: 40px;
+    margin-left: auto;     /* Add this */
+    margin-right: auto;    /* Add this */
+}
+
+.charts_new {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 100%;
+    width: 100%;    
+    align-items: center;   /* This centers children horizontally */
+    margin-bottom: 40px;
+    margin-left: auto;     /* Add this */
+    margin-right: auto;    /* Add this */
 }
 
 canvas {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 20px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #000000;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    max-width: 100%;
 }
 
 /* Tables */
 .tables {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+
 }
 
 .tables ul {
