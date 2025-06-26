@@ -8,13 +8,13 @@
 </head>
 <body>
     <div class="navbar">
-        <span>Welcome, {{ current_user.username }}</span>
+        <span><b>Welcome, {{ current_user.username }}</b></span>
         <a href="{{ url_for('view_result') }}">View Results</a>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 
     <div class="container">
-        <h1>Real-Time Dashboard</h1>
+        <h1><u>Real-Time Dashboard</u></h1>
 
         <div class="summary">
             <div>Total Logs : {{ total_logs }}</div>
@@ -22,8 +22,18 @@
             <div>Unique IPs : {{ unique_ips }}</div>
         </div>
 
+        <br>
+        <br>
+        <br>
+
+        <div class="navbar_for_buttons">
+            <a href="{{ url_for('status_code_distribution') }}" class="btn btn-primary mt-2" target="_blank">Status Codes Distribution</a>
+            <a href="{{ url_for('top_req_ip') }}" class="btn btn-primary mt-2" target="_blank">Top Requesting IPs</a>
+            <a href="{{ url_for('activity_timeline') }}" class="btn btn-primary mt-2" target="_blank">Activity Timeline</a>
+        </div>
+
         {% if enable_graphs %}
-        <div class="charts">
+        <div class="charts" >
             <h2>Status Codes Distribution</h2>
             <canvas id="statusChart"></canvas>
 

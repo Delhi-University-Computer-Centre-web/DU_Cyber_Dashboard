@@ -19,6 +19,8 @@ db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+log_data= parse_logs('logs')
+
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
@@ -58,7 +60,6 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    log_data = parse_logs('logs')
     total_logs = log_data["total_logs"]
     total_threats = log_data["total_threats"]
     unique_ips = log_data["unique_ips"]
@@ -117,30 +118,48 @@ def dashboard():
 def view_result():
     return render_template('results.html')
 
+@app.route('/status_code_distribution')
+@login_required
+def status_code_distribution():
+    status_counts = log_data["status_counts"]
+    return render_template('status_code_distribution.html', status_counts=status_counts)
+
+@app.route('/top_req_ip')
+@login_required
+def top_req_ip():
+    ip_counts = log_data["ip_counts"]
+    return render_template('top_req_ip.html', ip_counts=ip_counts)
+
+@app.route('/activity_timeline')
+@login_required
+def activity_timeline():
+    timeline_data = log_data["timeline"]
+    return render_template('activity_timeline.html', timeline_data=timeline_data)
+
 @app.route('/generate_report')
 @login_required
 def generate_report():
-    log_data = parse_logs('logs')
-    total_logs = len(log_data)
-    total_threats = sum(1 for log in log_data if log.get('is_threat'))
-    unique_ips = len(set(log['ip'] for log in log_data))
+    data = parse_logs('logs')
+    # total_logs = len(log_data)
+    # total_threats = sum(1 for log in log_data if log.get('is_threat'))
+    # unique_ips = len(set(log['ip'] for log in log_data))
 
-    top_threats = {}
-    ai_threats = {}
-    for log in log_data:
-        ip = log['ip']
-        if log['is_threat']:
-            top_threats[ip] = top_threats.get(ip, 0) + 1
-        if model.predict(log):
-            ai_threats[ip] = ai_threats.get(ip, 0) + 1
+    # top_threats = {}
+    # ai_threats = {}
+    # for log in log_data:
+    #     ip = log['ip']
+    #     if log['is_threat']:
+    #         top_threats[ip] = top_threats.get(ip, 0) + 1
+    #     if model.predict(log):
+    #         ai_threats[ip] = ai_threats.get(ip, 0) + 1
 
-    data = {
-        'total_logs': total_logs,
-        'total_threats': total_threats,
-        'unique_ips': unique_ips,
-        'top_threats': top_threats,
-        'ai_threats': ai_threats
-    }
+    # data = {
+    #     'total_logs': total_logs,
+    #     'total_threats': total_threats,
+    #     'unique_ips': unique_ips,
+    #     'top_threats': top_threats,
+    #     'ai_threats': ai_threats
+    # }
     filename = generate_pdf_report(data)
     return send_file(filename, as_attachment=True)
 
